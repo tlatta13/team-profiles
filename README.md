@@ -8,6 +8,8 @@ This project required us to build an application that would allow a team manager
 
 <a name="accomplishments"></a>
 ## Key Accomplishments
+* Successfully ran and passed all tests provided. 
+* Created a prompt to enter employee information that displays specific questions based on role selected. 
 
 <a name="photos"></a>
 ## Photos

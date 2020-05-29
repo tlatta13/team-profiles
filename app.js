@@ -13,7 +13,10 @@ const render = require("./lib/htmlRenderer");
 
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
-const questions = [
+employeeArray = [];
+
+function addEmployee() {
+    inquirer.prompt([
     {
       type: "input",
       message: "Enter Employee Name",
@@ -47,30 +50,63 @@ const questions = [
     },
     {
         type: "input",
-        name: "GitHubUser",
+        name: "github",
         message: "Enter Employee GitHub Username",
         when: (roleChoice) => roleChoice.role === "Engineer",
     },
     {
         type: "input",
-        name: "GitHubUser",
+        name: "school",
         message: "What school does inter attend?",
         when: (roleChoice) => roleChoice.role === "Intern",
     },
-];
+
+    // Use a .then to create new employee and push to 
+]).then(async answer => {
+    if (answer.role === "Manager") {
+    const newManager = new Manager(answer.name, answer.id, answer.email, answer.officeNumber);
+    employeeArray.push(newManager);
+    console.log(newManager);
+    } 
+    
+    else if (answer.role === "Engineer") {
+    const newEngineer = new Engineer(answer.name, answer.id, answer.email, answer.github);
+    employeeArray.push(newEngineer);
+    console.log(newEngineer);
+    } 
+    
+    else if (answer.role === "Intern") {
+    const newIntern = new Intern(answer.name, answer.id, answer.email, answer.school)
+    employeeArray.push(newIntern);
+    console.log(newIntern);
+    };
+});
+}
+// function addAnotherEmployee() {
+//     inquirer
+//       .prompt([
+//         {
+//           type: "confirm",
+//           name: "choice",
+//           message: "Would you like to add another employee?"
+//         }
+//       ])
+//       .then(val => {
+//         if (val.choice) {
+//           addEmployee();
+//         } else {
+//           quit();
+//         }
+//       });
+//   };
 
 
-function init() {
-    return inquirer.prompt(questions)
-};
-
-// render(questions);
-
-init();
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
+addEmployee();
+render(employeeArray);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
