@@ -39,11 +39,32 @@ const questions = [
             "Intern",
         ]
     },
+    {
+        type: "input",
+        name: "officeNumber",
+        message: "Enter Your Office Number:",
+        when: (roleChoice) => roleChoice.role === "Manager",
+    },
+    {
+        type: "input",
+        name: "GitHubUser",
+        message: "Enter Employee GitHub Username",
+        when: (roleChoice) => roleChoice.role === "Engineer",
+    },
+    {
+        type: "input",
+        name: "GitHubUser",
+        message: "What school does inter attend?",
+        when: (roleChoice) => roleChoice.role === "Intern",
+    },
 ];
+
 
 function init() {
     return inquirer.prompt(questions)
 };
+
+// render(questions);
 
 init();
 
