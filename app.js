@@ -15,98 +15,137 @@ const render = require("./lib/htmlRenderer");
 // and to create objects for each team member (using the correct classes as blueprints!)
 employeeArray = [];
 
-function addEmployee() {
-    inquirer.prompt([
-    {
-      type: "input",
-      message: "Enter Employee Name",
-      name: "name",
-    },
-    {
-      type: "input",
-      message: "Enter Employee ID",
-      name: "id"
-    },
-    {
-      type: "input",
-      message: "Enter Employee Email",
-      name: "email",
-    },
-    {
-        type: "list",
-        message: "What is the Employees Role?",
-        name: "role",
-        choices: [
-            "Manager",
-            "Engineer",
-            "Intern",
-        ]
-    },
-    {
-        type: "input",
-        name: "officeNumber",
-        message: "Enter Your Office Number:",
-        when: (roleChoice) => roleChoice.role === "Manager",
-    },
-    {
-        type: "input",
-        name: "github",
-        message: "Enter Employee GitHub Username",
-        when: (roleChoice) => roleChoice.role === "Engineer",
-    },
-    {
-        type: "input",
-        name: "school",
-        message: "What school does inter attend?",
-        when: (roleChoice) => roleChoice.role === "Intern",
-    },
+function teamBuidler() {
+    
+    function addManager() {
+        inquirer.prompt([
+            {
+            type: "input",
+            message: "Enter Manager Name",
+            name: "name",
+            },
+            {
+            type: "input",
+            message: "Enter Manager ID #",
+            name: "id",
+            },
+            {
+            type: "input",
+            message: "Enter Employee Email",
+            name: "email",
+            },
+            {
+            type: "input",
+            name: "officeNumber",
+            message: "Enter Your Office Number:",
+            }
+        ]).then(answer => {
+                const newManager = new Manager(answer.name, answer.id, answer.email, answer.officeNumber);
+                employeeArray.push(newManager);
+                console.log(newManager);
+                addTeam();
+        });
+    }
 
-    // Use a .then to create new employee and push to 
-]).then(async answer => {
-    if (answer.role === "Manager") {
-    const newManager = new Manager(answer.name, answer.id, answer.email, answer.officeNumber);
-    employeeArray.push(newManager);
-    console.log(newManager);
-    } 
-    
-    else if (answer.role === "Engineer") {
-    const newEngineer = new Engineer(answer.name, answer.id, answer.email, answer.github);
-    employeeArray.push(newEngineer);
-    console.log(newEngineer);
-    } 
-    
-    else if (answer.role === "Intern") {
-    const newIntern = new Intern(answer.name, answer.id, answer.email, answer.school)
-    employeeArray.push(newIntern);
-    console.log(newIntern);
-    };
-});
+    function addTeam() {
+        inquirer
+        .prompt([
+            {
+            type: "list",
+            message: "What is the Employees Role?",
+            name: "role",
+            choices: [
+                "Engineer",
+                "Intern",
+                "Finished adding team members",
+            ]
+            },
+        ]).then(roleChoice => {
+            switch(roleChoice.role) {
+                case "Engineer":
+                    addEngineer();
+                    break;
+                case "Intern":
+                    addIntern();
+                    break;
+                default:
+                    generate();
+            };
+        });
+    }    
+    function addEngineer() {
+        inquirer.prompt([    
+            {
+            type: "input",
+            message: "Enter Engineer Name:",
+            name: "name",
+            },
+            {
+            type: "input",
+            message: "Enter Engineer ID #",
+            name: "id",
+            },
+            {
+            type: "input",
+            message: "Enter Engineer Email",
+            name: "email",
+            },
+            {
+            type: "input",
+            name: "github",
+            message: "Enter Engineer's GitHub Username",
+            },
+        ]).then(answer => {           
+            const newEngineer = new Engineer(answer.name, answer.id, answer.email, answer.github);
+            employeeArray.push(newEngineer);
+            console.log(newEngineer);         
+            addTeam();
+        });
+    }
+
+    function addIntern() {
+        inquirer.prompt([    
+            {
+            type: "input",
+            message: "Enter Intern Name:",
+            name: "name",
+            },
+            {
+            type: "input",
+            message: "Enter Intern ID #",
+            name: "id",
+            },
+            {
+            type: "input",
+            message: "Enter Intern Email",
+            name: "email",
+            },
+            {
+            type: "input",
+            name: "school",
+            message: "What school does intern attend?",
+            },
+        ]).then(answer => {
+            const newIntern = new Intern(answer.name, answer.id, answer.email, answer.school)
+            employeeArray.push(newIntern);
+            console.log(newIntern);            
+            addTeam();
+        });
+    }
+
+    function generate() {
+        fs.writeFileSync(outputPath, render(employeeArray), "utf-8");
+    }
+
+    addManager();
 }
-// function addAnotherEmployee() {
-//     inquirer
-//       .prompt([
-//         {
-//           type: "confirm",
-//           name: "choice",
-//           message: "Would you like to add another employee?"
-//         }
-//       ])
-//       .then(val => {
-//         if (val.choice) {
-//           addEmployee();
-//         } else {
-//           quit();
-//         }
-//       });
-//   };
 
+teamBuidler();
 
 
 // After the user has input all employees desired, call the `render` function (required
 // above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
-addEmployee();
-render(employeeArray);
 
 // After you have your html, you're now ready to create an HTML file using the HTML
 // returned from the `render` function. Now write it to a file named `team.html` in the
@@ -122,4 +161,4 @@ render(employeeArray);
 // and Intern classes should all extend from a class named Employee; see the directions
 // for further information. Be sure to test out each class and verify it generates an
 // object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+// for the provided `render` function to work!

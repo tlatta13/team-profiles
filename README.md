@@ -10,9 +10,11 @@ This project required us to build an application that would allow a team manager
 ## Key Accomplishments
 * Successfully ran and passed all tests provided. 
 * Created a prompt to enter employee information that displays specific questions based on role selected. 
+* Prompt input creates an web page displaying team members.
 
 <a name="photos"></a>
 ## Photos
+![Team Page](/assets/Team-Builder-Demo.png)
 
 <a name="siteLinks"></a>
 ## Site Links
