@@ -13,9 +13,11 @@ This project required us to build an application that would allow a team manager
 * Prompt input creates an web page displaying team members.
 
 <a name="photos"></a>
-## Photos
-![Team Page](/assets/Team-Builder-Demo.png)
+## Photos / Videos
+[Application Demo Video](https://vimeo.com/424399672)
+![Team Page](./assets/Team-Builder-Demo.png)
 
 <a name="siteLinks"></a>
 ## Site Links
 [Repository](https://github.com/tlatta13/team-profiles.git)
+[Deployed Application](https://tlatta13.github.io/team-profiles/)
