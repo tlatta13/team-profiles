@@ -15,7 +15,7 @@ This project required us to build an application that would allow a team manager
 <a name="photos"></a>
 ## Photos / Videos
 * [Application Demo Video](https://vimeo.com/424399672)
-* ![Team Page](./assets/Team-Builder-Demo.png)
+* ![Team Page](/Assets/Team-Builder-Demo.png)
 
 <a name="siteLinks"></a>
 ## Site Links
